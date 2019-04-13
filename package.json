@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/corasan/react-native-expandable-card#readme",
   "dependencies": {
-    "react": "^16.8.6",
-    "react-native": "^0.59.4"
+    "flow-bin": "^0.97.0"
   }
 }

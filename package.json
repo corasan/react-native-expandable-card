@@ -1,0 +1,31 @@
+{
+  "name": "react-native-expandable-card",
+  "version": "1.0.0",
+  "description": "React Native card similar to App Store card animation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corasan/react-native-expandable-card.git"
+  },
+  "keywords": [
+    "react-native",
+    "react",
+    "ios",
+    "app",
+    "store",
+    "mobile"
+  ],
+  "author": "Henry Paulino <henrypl360@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corasan/react-native-expandable-card/issues"
+  },
+  "homepage": "https://github.com/corasan/react-native-expandable-card#readme",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-native": "^0.59.4"
+  }
+}

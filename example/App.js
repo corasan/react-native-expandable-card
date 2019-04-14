@@ -26,6 +26,7 @@ export default class App extends Component<Props> {
           cardHeight={300}
           cardWidth={280}
           contentComponent={<Text>{content}</Text>}
+          headerContentComponent={<View style={{ backgroundColor: 'rgba(255, 255, 100, 0.4)', height: 200, width: '100%' }} />}
         />
       </View>
     );

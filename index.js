@@ -15,7 +15,12 @@ type Props = {
   cardHeight: number,
   cardWidth: number,
   speed: number,
-  borderRadius: number
+  borderRadius: number,
+  containerStyles: {},
+  contentContainerStyles: {},
+  contentComponent: React.ComponentType<any>,
+  headerContainerStyles: {},
+  headerContentComponent: React.ComponentType<any>,
 }
 
 const HEIGHT = Dimensions.get('screen').height
@@ -25,8 +30,13 @@ function ExpandableCard(props: Props) {
   const {
     cardHeight,
     cardWidth,
-    speed = 2,
-    borderRadius = 15
+    speed = 3,
+    borderRadius = 15,
+    containerStyles,
+    contentContainerStyles,
+    contentComponent,
+    headerContainerStyles,
+    headerContentComponent
   } = props
   const [containerHeight] = useState(new Animated.Value(cardHeight))
   const [containerWidth] = useState(new Animated.Value(cardWidth))
@@ -35,6 +45,7 @@ function ExpandableCard(props: Props) {
   const [contentDisplay] = useState(new Animated.Value(0))
   const [buttonDisabled, setButtonDisable] = useState(false)
   const [contentHeight] = useState(new Animated.Value(0))
+  const [bottomContainerHeight] = useState(new Animated.Value(0))
 
   const expand = (): void => {
     setButtonDisable(true)
@@ -42,8 +53,9 @@ function ExpandableCard(props: Props) {
       Animated.spring(containerHeight, { toValue: HEIGHT, speed }),
       Animated.spring(containerWidth, { toValue: WIDHT, speed }),
       Animated.timing(containerRadius, { toValue: 40 }),
-      Animated.timing(closeBtnOpacity, { toValue: 1, duration: 300 }),
-      Animated.timing(contentHeight, { toValue: 300, duration: 400 }),
+      Animated.timing(closeBtnOpacity, { toValue: 1, duration: 200 }),
+      Animated.timing(contentHeight, { toValue: 300, duration: 100 }),
+      Animated.timing(bottomContainerHeight, { toValue: 0, duration: 300 })
     ]).start()
   }
 
@@ -53,7 +65,7 @@ function ExpandableCard(props: Props) {
       Animated.spring(containerHeight, { toValue: cardHeight, speed: speed + 1 }),
       Animated.spring(containerWidth, { toValue: cardWidth, speed: speed + 1 }),
       Animated.timing(containerRadius, { toValue: borderRadius }),
-      Animated.timing(closeBtnOpacity, { toValue: 0, duration: 300 }),
+      Animated.timing(closeBtnOpacity, { toValue: 0, duration: 200 }),
       Animated.timing(contentHeight, { toValue: 0, duration: 300 }),
     ]).start()
   }
@@ -63,35 +75,45 @@ function ExpandableCard(props: Props) {
     outputRange: ['0%','25%', '50%', '75%', '100%']
   });
 
-  const containerStyles = {
+  // bottomContainerHeight
+
+  const animatedContainerStyles = {
     height: containerHeight,
     width: containerWidth,
     borderRadius: containerRadius
   }
 
   return (
-    <Animated.View style={[styles.container, containerStyles]}>
+    <Animated.View style={[styles.container, animatedContainerStyles, containerStyles]}>
       <TouchableOpacity style={{ height: '100%', width: '100%' }} onPress={expand} disabled={buttonDisabled}>
-        <Animated.View style={[styles.header, { borderTopLeftRadius: containerRadius, borderTopRightRadius: containerRadius }]}>
+        <Animated.View
+          style={[
+            styles.header,
+            {
+              borderTopLeftRadius: containerRadius,
+              borderTopRightRadius: containerRadius
+            },
+            headerContainerStyles
+          ]}
+        >
           <Animated.View style={[styles.closeCircle, { opacity: closeBtnOpacity }]}>
             <TouchableOpacity
               onPress={contract}
               disabled={!buttonDisabled}
-              style={{
-                height: '100%',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
+              style={styles.closeBtn}
             >
               <Text style={{ color: 'white' }}>X</Text>
             </TouchableOpacity>
           </Animated.View>
+          {headerContentComponent}
         </Animated.View>
 
-        <Animated.View style={[styles.content, { height: animatedContentHeight }]}>
-          <Text>Something here</Text>
+        <Animated.View style={[styles.initialViewContent, { height: bottomContainerHeight }]}>
+          <Text>Hello</Text>
+        </Animated.View>
 
+        <Animated.View style={[styles.content, { height: animatedContentHeight }, contentContainerStyles]}>
+          {contentComponent}
         </Animated.View>
       </TouchableOpacity>
     </Animated.View>
@@ -101,8 +123,6 @@ function ExpandableCard(props: Props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    height: 300,
-    width: 250,
     borderRadius: 12,
     shadowColor: 'black',
     shadowOffset: { height: 0, height: 0 },
@@ -119,14 +139,26 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     zIndex: 100,
   },
-  header: {
-    width: '100%',
-    height: 200,
-    backgroundColor: 'red'
-  },
+  // header: {
+  //   width: '100%',
+  //   height: 200,
+  //   backgroundColor: 'rgba(255, 255, 100, 0.4)'
+  // },
   content: {
     width: '100%',
-    backgroundColor: 'blue',
+    paddingHorizontal: 30
+  },
+  closeBtn: {
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  initialViewContent: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

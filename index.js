@@ -42,8 +42,8 @@ function ExpandableCard(props: Props) {
       Animated.spring(containerHeight, { toValue: HEIGHT, speed }),
       Animated.spring(containerWidth, { toValue: WIDHT, speed }),
       Animated.timing(containerRadius, { toValue: 40 }),
-      Animated.timing(closeBtnOpacity, { toValue: 1, duration: 200 }),
-      Animated.timing(contentHeight, { toValue: 300, duration: 300 }),
+      Animated.timing(closeBtnOpacity, { toValue: 1, duration: 300 }),
+      Animated.timing(contentHeight, { toValue: 300, duration: 400 }),
     ]).start()
   }
 
@@ -53,8 +53,8 @@ function ExpandableCard(props: Props) {
       Animated.spring(containerHeight, { toValue: cardHeight, speed: speed + 1 }),
       Animated.spring(containerWidth, { toValue: cardWidth, speed: speed + 1 }),
       Animated.timing(containerRadius, { toValue: borderRadius }),
-      Animated.timing(closeBtnOpacity, { toValue: 0, duration: 200 }),
-      Animated.timing(contentHeight, { toValue: 0, duration: 200 }),
+      Animated.timing(closeBtnOpacity, { toValue: 0, duration: 300 }),
+      Animated.timing(contentHeight, { toValue: 0, duration: 300 }),
     ]).start()
   }
 

@@ -32,19 +32,23 @@ function ExpandableCard(props: Props) {
   const [closeBtnWidth] = useState(new Animated.Value(0))
 
   const expand = (): void => {
-    Animated.spring(containerHeight, { toValue: HEIGHT, speed }).start()
-    Animated.spring(containerwidth, { toValue: WIDHT, speed }).start()
-    Animated.timing(containerRadius, { toValue: 40 }).start()
-    Animated.timing(closeBtnHeight, { toValue: 40, duration: 200 }).start()
-    Animated.timing(closeBtnWidth, { toValue: 40, duration: 200 }).start()
+    Animated.parallel([
+      Animated.spring(containerHeight, { toValue: HEIGHT, speed }),
+      Animated.spring(containerwidth, { toValue: WIDHT, speed }),
+      Animated.timing(containerRadius, { toValue: 40 }),
+      Animated.timing(closeBtnHeight, { toValue: 40, duration: 200 }),
+      Animated.timing(closeBtnWidth, { toValue: 40, duration: 200 }),
+    ]).start()
   }
 
   const contract = (): void => {
-    Animated.spring(containerHeight, { toValue: cardHeight, speed: speed + 1 }).start()
-    Animated.spring(containerwidth, { toValue: cardWidth, speed: speed + 1 }).start()
-    Animated.timing(containerRadius, { toValue: borderRadius }).start()
-    Animated.timing(closeBtnHeight, { toValue: 0, duration: 200 }).start()
-    Animated.timing(closeBtnWidth, { toValue: 0, duration: 200 }).start()
+    Animated.parallel([
+      Animated.spring(containerHeight, { toValue: cardHeight, speed: speed + 1 }),
+      Animated.spring(containerwidth, { toValue: cardWidth, speed: speed + 1 }),
+      Animated.timing(containerRadius, { toValue: borderRadius }),
+      Animated.timing(closeBtnHeight, { toValue: 0, duration: 200 }),
+      Animated.timing(closeBtnWidth, { toValue: 0, duration: 200 }),
+    ]).start()
   }
 
   return (

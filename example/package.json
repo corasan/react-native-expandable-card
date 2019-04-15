@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "16.8.6",
     "react-native": "0.59.4",
-    "react-native-expandable-card": "file:../"
+    "react-native-expandable-card": "../"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

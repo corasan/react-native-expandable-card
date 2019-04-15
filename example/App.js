@@ -8,7 +8,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import ExpandableCard from 'react-native-expandable-card'
+import ExpandableCard from './node_modules/react-native-expandable-card/ExpandableCard'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -23,10 +23,15 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <ExpandableCard
-          cardHeight={300}
+          cardHeight={400}
           cardWidth={280}
           contentComponent={<Text>{content}</Text>}
-          headerContentComponent={<View style={{ backgroundColor: 'rgba(255, 255, 100, 0.4)', height: 200, width: '100%' }} />}
+          headerContentComponent={<View style={{ backgroundColor: 'rgb(255,230,231)', height: 320, width: '100%' }} />}
+          imageContainerStyles={{
+            height: 300,
+            width: '100%',
+            backgroundColor: 'red',
+          }}
         />
       </View>
     );

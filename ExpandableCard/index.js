@@ -4,13 +4,14 @@ import {
   View,
   Animated,
   Dimensions,
-  StyleSheet
+  StyleSheet,
+  TouchableWithoutFeedback,
 } from 'react-native'
 
 import styles from './styles'
 
 type Props = {
-
+  height: number,
 }
 
 type State = {
@@ -20,29 +21,38 @@ type State = {
 
 const HEIGHT = Dimensions.get('screen').height
 const WIDTH = Dimensions.get('screen').width
-const { Value } = Animated
+const { Value, parallel, spring } = Animated
 
 class ExpandableCard extends Component<Props, State> {
-  state = {
-    translateY: new Value(0),
-    translateX: new Value(200)
-  }
+  height: Animated.Value
 
-  componentDidMount() {
-    this.expand()
+  constructor(props: Props) {
+    super(props)
+    console.log(props)
+    this.height = new Value(props.height)
+    this.width = new Value(WIDTH - 30)
   }
 
   expand = () => {
-    const { translateX } = this.state
-    Animated.parallel([
-      Animated.spring(translateX, { toValue: 0 })
-    ])
+    const { height, width } = this
+    parallel([
+      spring(height, { toValue: HEIGHT }),
+      spring(width, { toValue: WIDTH }),
+    ]).start()
   }
 
   render() {
+    const { height, width } = this
+    const animatedStyles = {
+      height,
+      width
+    }
+
     return (
-      <Animated.View style={styles.container}>
-        
+      <Animated.View style={[styles.container, animatedStyles]}>
+        <TouchableWithoutFeedback onPress={this.expand}>
+          <View style={{ height: '100%', width: '100%' }} />
+        </TouchableWithoutFeedback>
       </Animated.View>
     )
   }

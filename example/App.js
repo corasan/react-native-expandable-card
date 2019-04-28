@@ -7,15 +7,8 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View, ScrollView} from 'react-native';
 import ExpandableCard from './node_modules/react-native-expandable-card/ExpandableCard'
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -23,14 +16,14 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <ExpandableCard
-          cardHeight={400}
+          height={400}
           cardWidth={280}
           contentComponent={<Text>{content}</Text>}
           headerContentComponent={<View style={{ backgroundColor: 'rgb(255,230,231)', height: 320, width: '100%' }} />}
-          imageContainerStyles={{
+          headerContainerStyles={{
             height: 300,
             width: '100%',
-            backgroundColor: 'red',
+            backgroundColor: 'rgb(255,140,140)',
           }}
         />
       </View>
@@ -49,7 +42,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    // backgroundColor: 'green',
+    // ...StyleSheet.absoluteFillObject
   },
   welcome: {
     fontSize: 20,
